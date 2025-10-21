@@ -49,3 +49,4 @@ Esto es con el fin de hacer más cómodo el uso del sistema para los usuarios fi
 * Recicladores (como individuo): Trabajadores de la cooperativa que realizan las rutas de recolección.  
 * Usuarios de recicladores (hogares): Usuarios de la aplicación, estos hacen solicitudes con su ubicación geográfica del sitio en cuestión.  
 * Coordinadores de ruta: Persona encargada de gestionar una ruta la cual deberán realizar los recicladores, pueden hacer cambios en medio de la ruta.
+
