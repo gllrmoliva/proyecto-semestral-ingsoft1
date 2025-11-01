@@ -1,0 +1,20 @@
+@startuml
+actor "<u>:Coordinador de ruta</u>" as Coor
+participant "<u>:Sistema</u>" as Sis
+participant "<u>:Sistema de geolocalización</u>" as Geo
+
+Coor -> Sis: consultarRegistroGeneral(coordinador_id)
+Sis --> Coor: solicitudes, lotes, rutas
+
+Coor -> Sis: filtrarSolicitudes(estado="pendiente")
+Sis --> Coor: solicitudes_filtradas
+
+Coor -> Sis: seleccionarSolicitudes(solicitudes_seleccionadas)
+Sis -> Geo: validarProximidad(solicitudes_seleccionadas)
+Geo --> Sis: validación_OK
+Sis --> Coor: validación_OK
+
+Coor -> Sis: asignarRuta(ruta_seleccionada)
+Coor -> Sis: confirmarCreaciónLote()
+Sis --> Coor: mensaje_confirmación
+@enduml

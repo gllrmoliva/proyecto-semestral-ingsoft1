@@ -1,0 +1,43 @@
+@startuml
+actor "Reciclador" as Reciclador
+actor "Coordinador de ruta" as Coordinador
+
+participant "Sistema" as Sistema
+participant "Sistema de geolocalización" as Geo
+
+
+Coordinador -> Sistema: consultarRegistroGeneral(coordinador_id)
+Sistema --> Coordinador: solicitudes, lotes, rutas
+Coordinador -> Sistema: consultaLote(lote_id)
+Sistema --> Coordinador: información_lote
+
+alt lote tiene ruta asignada
+    opt consultar por ruta
+        Coordinador -> Sistema: consultarRutaLote()
+        Sistema --> Coordinador: información_ruta
+end 
+
+
+else lote no tiene ruta asignada
+    Coordinador -> Sistema: crearRuta()
+    ref over Coordinador, Sistema
+"UC: Asignar reciclador a la ruta"
+end ref
+end
+
+opt solicitar optimizar ruta
+    Coordinador -> Sistema: solicitarRutaOptima()
+    Sistema -> Geo: SolicitarRutaOptima(datos_posicionales)
+    Geo --> Sistema: ruta_óptima
+    Sistema --> Coordinador: ruta_óptima
+end
+
+opt modificar ruta
+    Coordinador -> Sistema: modificarRuta(nueva_ruta)
+    Sistema -> Geo: validarRuta(nueva_ruta)
+    Geo --> Sistema: validación_OK
+    Sistema --> Reciclador: notificacion_cambio_ruta
+    Sistema -> Sistema: actualizarRuta()
+    Sistema --> Coordinador: mensaje_confirmación
+end
+@enduml

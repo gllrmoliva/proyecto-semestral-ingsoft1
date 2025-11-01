@@ -1,0 +1,103 @@
+@startuml
+skinparam linetype ortho
+skinparam classRelationLabelPosition side
+
+' Supongo que esto esta bien?
+class Usuario {
+    +int id
+    +string nombre
+    +string email
+    +string telefono
+}
+
+class Cliente {
+    +timestamp fechaRegistro
+}
+
+class CoordinadorRuta {
+}
+
+class Recolector {
+}
+
+class RutaRecoleccion {
+    +int idRuta
+    +string estado
+    +timestamp fechaCreacion
+    +double distanciaTotal
+    +time duracionEstimada
+}
+
+class SolicitudRetiro {
+    +int idSolicitud
+    +timestamp fechaSolicitud
+    +string estado
+    +string observaciones
+}
+
+class LoteRecoleccion {
+    +int idLote
+    +timestamp fechaCreacion
+    +string estado
+    +int numeroSolicitudes
+}
+
+class Informe {
+    +int idInforme
+    +timestamp fechaEmision
+    +string nombreReciclador
+}
+
+class ComprobanteRecibo {
+    +double pesoTotalRecolectado
+}
+
+class Reporte {
+    +string observaciones
+}
+
+
+class Ubicacion {
+    +int idUbicacion
+    +double latitud
+    +double longitud
+    +string direccion
+    +string comuna
+    +string referencia
+}
+
+class Desecho {
+   +int idDesecho
+   +string tipoMaterial
+   +float cantidadAproximada
+}
+
+
+' Generalizaciones
+Usuario <|-- Cliente
+Usuario <|-- CoordinadorRuta
+Usuario <|-- Recolector
+
+Informe <|-- ComprobanteRecibo
+Informe <|-- Reporte
+
+' Composiciones
+SolicitudRetiro "1" *-- "1..*" Desecho
+LoteRecoleccion "1" *-- "1" RutaRecoleccion
+
+' Agregaciones
+SolicitudRetiro "1" --o "0..1" LoteRecoleccion
+
+
+' Asociaciones
+
+Cliente "1" -- "0..*" SolicitudRetiro
+Cliente "1..*" -- "0..*" Ubicacion
+SolicitudRetiro "0..*" -- "2" Ubicacion
+LoteRecoleccion "0..*" -- "1..*" CoordinadorRuta
+Recolector "1" -- "0..*" RutaRecoleccion
+CoordinadorRuta "1..*" -- "0..*" RutaRecoleccion
+Recolector "1" -- "0..*" Informe
+SolicitudRetiro "1" -- "0..*" Informe
+SolicitudRetiro "0..*" -- "0..*" CoordinadorRuta
+@enduml
