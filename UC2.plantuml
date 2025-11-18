@@ -20,24 +20,28 @@ end
 
 else lote no tiene ruta asignada
     Coordinador -> Sistema: crearRuta()
-    ref over Coordinador, Sistema
-"UC: Asignar reciclador a la ruta"
-end ref
 end
 
 opt solicitar optimizar ruta
-    Coordinador -> Sistema: solicitarRutaOptima()
-    Sistema -> Geo: SolicitarRutaOptima(datos_posicionales)
+    Coordinador -> Sistema: solicitarRutaÓptima()
+    Sistema -> Geo: solicitarRutaÓptima(datos_posicionales)
     Geo --> Sistema: ruta_óptima
     Sistema --> Coordinador: ruta_óptima
 end
 
 opt modificar ruta
     Coordinador -> Sistema: modificarRuta(nueva_ruta)
-    Sistema -> Geo: validarRuta(nueva_ruta)
-    Geo --> Sistema: validación_OK
-    Sistema --> Reciclador: notificacion_cambio_ruta
-    Sistema -> Sistema: actualizarRuta()
-    Sistema --> Coordinador: mensaje_confirmación
 end
+
+opt gestionar recicladores
+    ref over Coordinador, Sistema
+        "UC: Asignar reciclador a la ruta"
+    end ref
+end
+
+Sistema -> Geo: validarRuta(ruta)
+Geo --> Sistema: validación_OK
+Sistema --> Reciclador: notificacion_ruta
+Sistema -> Sistema: actualizarRuta()
+Sistema --> Coordinador: mensaje_confirmación
 @enduml
