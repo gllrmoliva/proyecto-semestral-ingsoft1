@@ -29,7 +29,7 @@ public class Main {
 
         for (int i = 1; i <= 5; i++) {
             SolicitudRetiro s = new SolicitudRetiro();
-            s.idSolicitud = i;
+            s.setIdSolicitud(i);
             // Se alternan los estados para ver como responde sistema
             s.estado = (i <= 3) ? "PENDIENTE" : "COMPLETADO";
             lista.add(s);
@@ -47,9 +47,9 @@ public class Main {
         List<SolicitudRetiro> solicitudesMock = generarSolicitudesPrueba();
 
 
-        controlador.repositorioSolicitudes.addAll(solicitudesMock);
+        controlador.getRepositorioSolicitudes().addAll(solicitudesMock);
 
-        System.out.println("Numero de Solicitudes: " + controlador.repositorioSolicitudes.size());
+        System.out.println("Numero de Solicitudes: " + controlador.getRepositorioSolicitudes().size());
 
         // Prueba de filtrado PENDIENTE
         System.out.println("\n...Filtrado de Solicitudes...");
@@ -62,7 +62,7 @@ public class Main {
             LoteRecoleccion lote = controlador.crearLote(pendientes);
 
             // verificamos si lote está en lista que gestiona controlador (esto simula BD)
-            boolean loteExiste = controlador.lotesGestionados.contains(lote);
+            boolean loteExiste = controlador.getLotesGestionados().contains(lote);
             assertTest(loteExiste, "El lote creado debe estar en la lista de lotes gestionados.");
         } catch (Exception e) {
             System.err.println("   FALLO: Excepción al crear lote - " + e.getMessage());
@@ -87,8 +87,8 @@ public class Main {
 
         // controlador cancela solicitud id:1
         boolean cancelado = controlador.cancelarSolicitudUsuario(1);
-        SolicitudRetiro solicitudCancelada = controlador.repositorioSolicitudes.stream()
-                .filter(s -> s.idSolicitud == 1).findFirst().orElse(null);
+        SolicitudRetiro solicitudCancelada = controlador.getRepositorioSolicitudes().stream()
+                .filter(s -> s.getIdSolicitud() == 1).findFirst().orElse(null);
 
         // verificar estado y bool
         assertTest(cancelado, "El método cancelar debe retornar true si existe el ID.");

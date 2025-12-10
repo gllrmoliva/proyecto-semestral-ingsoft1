@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 
 public class RutaRecoleccion {
-    public int idRuta;
+    private int idRuta;
     public String estado;
-    public LocalDateTime fechaCreacion;
-    public LocalDateTime fechaInicio;
-    public LocalDateTime fechaFin;
-    public double distanciaTotal;
-    public Duration duracionEstimada;
-    public Duration duracionReal;
+    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
+    private double distanciaTotal;
+    private Duration duracionEstimada;
+    private Duration duracionReal;
 
     public Recolector recolectorAsignado;   // modelado (puede ser null)
 

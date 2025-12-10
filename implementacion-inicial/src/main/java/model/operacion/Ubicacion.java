@@ -1,12 +1,12 @@
 package main.java.model.operacion;
 
 public class Ubicacion {
-    public int idUbicacion;
-    public double latitud;
-    public double longitud;
-    public String direccion;
-    public String comuna;
-    public String referencia;
+    private int idUbicacion;
+    private double latitud;
+    private double longitud;
+    private String direccion;
+    private String comuna;
+    private String referencia;
 
     public boolean validar() {
         // En la implementación solo se toma en cuenta que posea los atributos, pero en vida real se haría llamado a

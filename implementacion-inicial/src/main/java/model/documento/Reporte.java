@@ -2,7 +2,7 @@ package main.java.model.documento;
 
 public class Reporte extends Informe {
 
-    public String[] adjuntos;
+    private String[] adjuntos;
     private String estadoProceso;
 
     public Reporte() {
@@ -19,10 +19,10 @@ public class Reporte extends Informe {
             this.estadoProceso = "CERRADO";
         }
 
-        System.out.println(" > Estado del Reporte #" + this.idInforme + " cambiado a: " + this.estadoProceso);
+        System.out.println(" > Estado del Reporte #" + this.getIdInforme() + " cambiado a: " + this.estadoProceso);
     }
 
     public void notificarCoordinador() {
-        System.out.println("Notificando al coordinador sobre el reporte ID: " + this.idInforme);
+        System.out.println("Notificando al coordinador sobre el reporte ID: " + this.getIdInforme());
     }
 }

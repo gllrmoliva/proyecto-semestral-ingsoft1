@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoteRecoleccion {
-    public int idLote;
-    public LocalDateTime fechaCreacion;
+    private int idLote;
+    private LocalDateTime fechaCreacion;
     public String estado;
-    public int numeroSolicitudes;
+    private int numeroSolicitudes;
 
-    public RutaRecoleccion rutaGenerada;        // relaciones
-    public List<SolicitudRetiro> solicitudesAgrupadas;  // relaciones
+    private RutaRecoleccion rutaGenerada;        // relaciones
+    private List<SolicitudRetiro> solicitudesAgrupadas;  // relaciones
 
 
     public LoteRecoleccion() {
@@ -64,5 +64,9 @@ public class LoteRecoleccion {
             solicitud.actualizarEstado(nuevoEstadoSolicitud);
         }
         this.estado = nuevoEstadoSolicitud;
+    }
+
+    public int getIdLote() {
+        return idLote;
     }
 }

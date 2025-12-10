@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitudRetiro {
-    public int idSolicitud;
-    public LocalDateTime fechaSolicitud;
-    public LocalDateTime fechaEstimadaRetiro;
+    private int idSolicitud;
+    private LocalDateTime fechaSolicitud;
+    private LocalDateTime fechaEstimadaRetiro;
     public String estado;
-    public String observaciones;
+    private String observaciones;
 
-    public Ubicacion ubicacion;     // modelado relación
-    public List<Desecho> desechos;  // modelado relación
-    public List<Informe> informes;  // modelado relación
+    private Ubicacion ubicacion;     // modelado relación
+    private List<Desecho> desechos;  // modelado relación
+    private List<Informe> informes;  // modelado relación
 
     public SolicitudRetiro() {
         this.desechos = new ArrayList<>();
@@ -36,5 +36,13 @@ public class SolicitudRetiro {
     }
     public void notificarCambioEstado(String nuevoEstado) {
         System.out.printf("Se cambio el estado de solicitud de " + estado + " a " + nuevoEstado + "." );
+    }
+
+    public int getIdSolicitud() {
+        return idSolicitud;
+    }
+
+    public void setIdSolicitud(int idSolicitud) {
+        this.idSolicitud = idSolicitud;
     }
 }

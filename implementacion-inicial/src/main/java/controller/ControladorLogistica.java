@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 public class ControladorLogistica {
     // variables que simulan base de datos
-    public List<LoteRecoleccion> lotesGestionados;
-    public List<RutaRecoleccion> rutasSupervisadas;
+    private List<LoteRecoleccion> lotesGestionados;
+    private List<RutaRecoleccion> rutasSupervisadas;
 
-    public List<SolicitudRetiro> repositorioSolicitudes;
+    private List<SolicitudRetiro> repositorioSolicitudes;
 
     public ControladorLogistica() {
         this.lotesGestionados = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ControladorLogistica {
     public boolean modificarLote(LoteRecoleccion loteModificado) {
         // Busca y reemplaza el lote en la lista gestionada
         for (int i = 0; i < lotesGestionados.size(); i++) {
-            if (lotesGestionados.get(i).idLote == loteModificado.idLote) {
+            if (lotesGestionados.get(i).getIdLote() == loteModificado.getIdLote()) {
                 lotesGestionados.set(i, loteModificado);
                 return true;
             }
@@ -49,7 +49,7 @@ public class ControladorLogistica {
 
     public LoteRecoleccion seleccionarLote(int lote_id) {
         return lotesGestionados.stream()
-                .filter(l -> l.idLote == lote_id)
+                .filter(l -> l.getIdLote() == lote_id)
                 .findFirst()
                 .orElse(null);
     }
@@ -96,7 +96,7 @@ public class ControladorLogistica {
 
     public boolean cancelarSolicitudUsuario(int id) {
         Optional<SolicitudRetiro> solicitud = repositorioSolicitudes.stream()
-                .filter(s -> s.idSolicitud == id)
+                .filter(s -> s.getIdSolicitud() == id)
                 .findFirst();
 
         if (solicitud.isPresent()) {
@@ -137,5 +137,13 @@ public class ControladorLogistica {
         }
 
         return registroUnificado;
+    }
+
+    public List<SolicitudRetiro> getRepositorioSolicitudes() {
+        return repositorioSolicitudes;
+    }
+
+    public List<LoteRecoleccion> getLotesGestionados() {
+        return lotesGestionados;
     }
 }

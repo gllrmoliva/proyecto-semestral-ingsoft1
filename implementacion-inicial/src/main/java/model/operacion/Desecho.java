@@ -1,10 +1,10 @@
 package main.java.model.operacion;
 
 public class Desecho {
-    public int idDesecho;
-    public String tipoMaterial;
-    public float cantidadAproximada;
-    public String unidadMedida;
+    private int idDesecho;
+    private String tipoMaterial;
+    private float cantidadAproximada;
+    private String unidadMedida;
 
 
     public Desecho(int id, String tipo, float cantidad, String unidad) {
