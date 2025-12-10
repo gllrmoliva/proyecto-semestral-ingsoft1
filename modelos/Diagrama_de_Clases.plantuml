@@ -81,6 +81,9 @@ class Desecho {
   +tipoMaterial: string
   +cantidadAproximada: float
   +unidadMedida: string
+--
+  +obtenerUnidadDeMedida(): string
+  +obtenerCantidadAproximada(): float
 }
 
 class Ubicacion {
@@ -169,8 +172,11 @@ SolicitudRetiro "1" *-- "1..*" Desecho : contiene
 SolicitudRetiro "1" -- "0..*" Informe
 
 LoteRecoleccion "1" *-- "1" RutaRecoleccion : genera
-LoteRecoleccion "0..1" o-- "1" SolicitudRetiro : agrupa
+LoteRecoleccion "0..1" o-- "1..*" SolicitudRetiro : agrupa
 
 RutaRecoleccion "1" -- "0..1" Recolector : asignada a
 Recolector "1" -- "0..*" Informe
+
+SolicitudRetiro "1..*" -- "1*" RutaRecoleccion: {ordered}
+
 @enduml
