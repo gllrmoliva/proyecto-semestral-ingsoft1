@@ -8,6 +8,6 @@ La solución a este problema es crucial para optimizar las operaciones, mejorar 
 
 ## **Visión de la solución**
 
-Se propone implementar una solución informática que digitalice los procesos relacionados con el ingreso y gestión de solicitudes, así como la planificación y supervisión de las rutas, asegurando una trazabilidad completa. Esto es con el objetivo fundamental de automatizar y proveer la logística necesaria para la modernización de las cooperativas.
+Se propone el desarrollo de una solución informática para la digitalización de los procesos de ingreso de solicitudes, planificación logística y supervisión de rutas, asegurando una trazabilidad completa. La arquitectura del sistema contará con una aplicación móvil orientada a los recolectores en terreno y una plataforma web orientada a la gestión. Para los clientes se habilitará un acceso multiplataforma, tanto en móvil como en web para disminuir barreras de entrada. Esto es con el objetivo fundamental de automatizar y proveer la logística necesaria para la modernización de las cooperativas.
 
 Se espera que el sistema propuesto mejore la eficiencia operativa, facilite una experiencia más cómoda para los usuarios finales y agilice los procesos para los trabajadores involucrados.
