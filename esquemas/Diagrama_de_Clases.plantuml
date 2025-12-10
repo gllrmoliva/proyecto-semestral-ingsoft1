@@ -1,0 +1,176 @@
+@startuml
+skinparam linetype ortho
+skinparam classRelationLabelPosition side
+skinparam classFontSize 11
+skinparam classFontStyle normal
+skinparam shadowing false
+hide circle
+scale 1.3
+skinparam nodesep 40
+skinparam ranksep 60
+
+class Usuario {
+  +id: int
+  +nombre: string
+  +email: string
+  +telefono: string
+  --
+  +actualizarPerfil(): boolean
+}
+
+class Cliente {
+  +fechaRegistro: timestamp
+  --
+  +ingresarSolicitud(): SolicitudRetiro
+  +verHistorial(): SolicitudRetiro[]
+  +filtrarHistorial(criterios): SolicitudRetiro[]
+  +cancelarSolicitud(id): boolean
+}
+
+class CoordinadorRuta {
+  --
+  ' El coordinador ahora delega las acciones al controlador
+}
+
+class ControladorLogistica {
+  --
+  +crearLote(solicitudes): LoteRecoleccion
+  +modificarLote(lote): boolean
+  +seleccionarLote(lote_id): LoteRecoleccion
+  +consultarRutaLote(): RutaRecoleccion
+  +confirmarCreaciónLote(): bool
+  +crearRuta(): RutaRecoleccion
+  +modificarRuta(RutaRecoleccion): boolean
+  +asignarRuta(solicitudes, ruta): boolean
+  +asignarRecolector(ruta, recolector): boolean
+  +monitorearRutas(): RutaRecoleccion[]
+  +solicitarRutaOptima(lote): RutaRecoleccion
+  +cancelarSolicitudUsuario(id): boolean
+  +filtrarSolicitudes(estado): SolicitudRetiro[]
+  +seleccionarSolicitudes(id): bool
+  +consultarRegistroGeneral(): Solicitudes_Lotes_Rutas[]
+}
+
+class Recolector {
+  +disponible: boolean
+  +estado: string
+  --
+  +consultarRutaActual(): RutaRecoleccion
+  +consultarHistorialRutas(): RutaRecoleccion[]
+  +registrarResultado(solicitud, datos): ComprobanteRetiro
+  +reportarProblema(solicitud, descripcion): Reporte
+  +emitirComprobante(solicitud): ComprobanteRetiro
+  +finalizarRuta(): void
+}
+
+class SolicitudRetiro {
+  +idSolicitud: int
+  +fechaSolicitud: timestamp
+  +fechaEstimadaRetiro: datetime
+  +estado: string
+  +observaciones: string 
+  --
+  +validarUbicacion(): boolean
+  +cancelar(): boolean
+  +actualizarEstado(nuevoEstado): void
+  +notificarCambioEstado(): void
+}
+
+class Desecho {
+  +idDesecho: int
+  +tipoMaterial: string
+  +cantidadAproximada: float
+  +unidadMedida: string
+}
+
+class Ubicacion {
+  +idUbicacion: int
+  +latitud: double
+  +longitud: double
+  +direccion: string
+  +comuna: string
+  +referencia: string
+  --
+  +validar(): boolean
+  +calcularDistancia(Ubicacion): double
+}
+
+class RutaRecoleccion {
+  +idRuta: int
+  +estado: string
+  +fechaCreacion: timestamp
+  +fechaInicio: datetime
+  +fechaFin: datetime
+  +distanciaTotal: double
+  +duracionEstimada: time
+  +duracionReal: time
+  --
+  +optimizarRuta(): RutaRecoleccion          
+  +generarAlternativa(): RutaRecoleccion    
+  +validarFactibilidad(): boolean
+  +calcularTiempoEstimado(): time
+}
+
+class LoteRecoleccion {
+  +idLote: int
+  +fechaCreacion: timestamp
+  +estado: string
+  +numeroSolicitudes: int
+  --
+  +crearDesdeSolicitudes(solicitudes): boolean    
+  +modificarSolicitudes(): boolean
+  +actualizarEstadosSolicitudes(): void
+}
+
+class Informe {
++idInforme: int
++fechaEmision: timestamp
++nombreReciclador: string
+}
+
+class ComprobanteRetiro {
+  +idComprobante: int
+  +pesoTotalRecolectado: double
+  +fechaRetiro: datetime
+  --
+  +generarComprobante(): void
+  +enviarAlCliente(id): boolean
+}
+
+class Reporte {
+  +adjuntos: string[]
+  +estadoProceso
+  --
+  +actualizarEstado(): void
+  +notificarCoordinador(): void
+}
+
+' Relaciones de Herencia
+Usuario <|-- Cliente
+Usuario <|-- CoordinadorRuta
+Usuario <|-- Recolector
+
+Informe <|-- ComprobanteRetiro
+Informe <|-- Reporte
+
+' Relaciones del Controlador (GRASP)
+CoordinadorRuta ..> ControladorLogistica : utiliza
+ControladorLogistica --> LoteRecoleccion : gestiona
+ControladorLogistica --> RutaRecoleccion : supervisa
+ControladorLogistica ..> SolicitudRetiro : procesa
+ControladorLogistica ..> Recolector : asigna
+
+' Relaciones de Entidades
+Cliente "1" -- "0..*" SolicitudRetiro : realiza
+Cliente "1..*" -- "0..*" Ubicacion : tiene registradas
+
+SolicitudRetiro "0..*" -- "1" Ubicacion : en ubicación
+SolicitudRetiro "1" *-- "1..*" Desecho : contiene
+SolicitudRetiro "1" -- "0..*" Informe
+
+LoteRecoleccion "1" *-- "1" RutaRecoleccion : genera
+LoteRecoleccion "0..1" o-- "1" SolicitudRetiro : agrupa
+
+RutaRecoleccion "1" -- "0..1" Recolector : asignada a
+Recolector "1" -- "0..*" Informe
+@enduml
